@@ -43,7 +43,7 @@ public class SecurityConfig {
     private final JwtService jwtService;
 
 
-    @Value("${cors.allowed-origins.${spring.profiles.active}}")
+    @Value("${cors.allowed-origins:http://localhost:3000}")
     private List<String> allowOriginList;
 
 
