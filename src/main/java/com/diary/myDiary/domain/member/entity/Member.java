@@ -1,9 +1,13 @@
 package com.diary.myDiary.domain.member.entity;
 
+import com.diary.myDiary.domain.notification.entity.Notification;
 import com.diary.myDiary.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -18,6 +22,10 @@ public class Member extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id; //PK
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notification = new HashSet<>();
 
     @Column(nullable = false, length = 30, unique = true)
     private String username; //아이디
