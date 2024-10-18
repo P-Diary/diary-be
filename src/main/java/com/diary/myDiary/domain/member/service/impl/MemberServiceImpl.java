@@ -7,6 +7,7 @@ import com.diary.myDiary.domain.member.entity.Member;
 import com.diary.myDiary.domain.member.exception.MemberException;
 import com.diary.myDiary.domain.member.repository.MemberRepository;
 import com.diary.myDiary.domain.member.service.MemberService;
+import com.diary.myDiary.global.auth.security.SecurityUtil;
 import com.diary.myDiary.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
