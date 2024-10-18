@@ -3,6 +3,7 @@ package com.diary.myDiary.domain.member.controller;
 
 import com.diary.myDiary.domain.member.dto.*;
 import com.diary.myDiary.domain.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class MemberController {
      * 회원가입
      */
     @PostMapping("/signUp")
+    @Operation(summary = "회원 가입", description = "사용자가 회원가입을 합니다.")
     @ResponseStatus(HttpStatus.OK)
     public void singUp(@Valid @RequestBody MemberSignUpDTO memberSignUpDTO) throws Exception {
         memberService.signup(memberSignUpDTO);
@@ -30,6 +32,7 @@ public class MemberController {
      * 회원정보수정
      */
     @PutMapping
+    @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
     @ResponseStatus(HttpStatus.OK)
     public void updateInfo(@Valid @RequestBody MemberUpdateDTO memberUpdateDTO) throws Exception {
         memberService.update(memberUpdateDTO);
@@ -39,6 +42,7 @@ public class MemberController {
      * 비밀번호수정
      */
     @PutMapping("/password")
+    @Operation(summary = "비밀번호 수정", description = "비밀번호를 수정합니다.")
     @ResponseStatus(HttpStatus.OK)
     public void updatePassword(@Valid @RequestBody UpdatePasswordDTO updatePasswordDTO) throws Exception {
         memberService.updatePassword(updatePasswordDTO.checkPassword(), updatePasswordDTO.newPassword());
@@ -48,6 +52,7 @@ public class MemberController {
      * 회원탈퇴
      */
     @DeleteMapping
+    @Operation(summary = "회원 탈퇴", description = "회원탈퇴합니다.")
     @ResponseStatus(HttpStatus.OK)
     public void withdraw(@Valid @RequestBody MemberWithdrawDTO memberWithdrawDTO)throws Exception {
         memberService.withdraw(memberWithdrawDTO.checkPassword());
@@ -57,6 +62,7 @@ public class MemberController {
      * 회원정보조회
      */
     @GetMapping("/{id}")
+    @Operation(summary = "회원 정보 조회", description = "회원의 정보를 조회합니다.")
     public ResponseEntity getInfo(@Valid @PathVariable("id") Long id) throws Exception {
         MemberInfoDTO info = memberService.getInfo(id);
         return new ResponseEntity(info, HttpStatus.OK);
@@ -66,6 +72,7 @@ public class MemberController {
      * 내정보조회
      */
     @GetMapping
+    @Operation(summary = "내 정보 조회", description = "내 정보를 조회합니다.")
     public ResponseEntity getMyInfo(HttpServletResponse response) throws Exception {
 
         MemberInfoDTO myInfo = memberService.getMyInfo();

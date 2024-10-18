@@ -38,6 +38,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 30)
     private String nickName; //별명
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Gender gender;
+
     @Column(nullable = false, length = 30)
     private Integer age; //나이
 
