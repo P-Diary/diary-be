@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
         member.addUserAuthority();
         member.encodePassword(passwordEncoder);
 
-        if (memberRepository.findByUsername(memberSignUpDTO.username()).isPresent()) {
+        if (memberRepository.existsByUsername(memberSignUpDTO.username())) {
             throw new MemberException(ErrorCode.ALREADY_EXIST_MEMBER);
         }
 
@@ -39,8 +39,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void update(MemberUpdateDTO memberUpdateDTO) {
 
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
-                () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.getByUsernameOrThrow(SecurityUtil.getLoginUsername());
 
         memberUpdateDTO.age().ifPresent(member::updateAge);
         memberUpdateDTO.name().ifPresent(member::updateName);
@@ -50,8 +49,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updatePassword(String checkPassword, String newPassword) {
 
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
-                () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.getByUsernameOrThrow(SecurityUtil.getLoginUsername());
 
         if (!member.matchPassword(passwordEncoder, checkPassword)) {
             throw new MemberException(ErrorCode.MISMATCH_PASSWORD);
@@ -63,8 +61,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void withdraw(String checkPassword) {
 
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
-                () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.getByUsernameOrThrow(SecurityUtil.getLoginUsername());
 
         if (!member.matchPassword(passwordEncoder, checkPassword)) {
             throw new MemberException(ErrorCode.MISMATCH_PASSWORD);
@@ -76,16 +73,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoDTO getInfo(Long id) throws Exception {
 
-        Member findMember = memberRepository.findById(id).orElseThrow(
-                () -> new Exception("회원이 존재하지 않습니다."));
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new Exception("회원이 존재하지 않습니다."));
         return new MemberInfoDTO(findMember);
     }
 
     @Override
     public MemberInfoDTO getMyInfo() {
-        Member findMember = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
-                () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
-
-        return new MemberInfoDTO(findMember);
+        return new MemberInfoDTO(memberRepository.getByUsernameOrThrow(SecurityUtil.getLoginUsername()));
     }
 }
