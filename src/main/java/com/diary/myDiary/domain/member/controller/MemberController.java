@@ -63,9 +63,9 @@ public class MemberController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "회원 정보 조회", description = "회원의 정보를 조회합니다.")
-    public ResponseEntity getInfo(@Valid @PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<MemberInfoDTO> getInfo(@Valid @PathVariable("id") Long id) throws Exception {
         MemberInfoDTO info = memberService.getInfo(id);
-        return new ResponseEntity(info, HttpStatus.OK);
+        return ResponseEntity.ok(info);
     }
 
     /**
@@ -73,9 +73,9 @@ public class MemberController {
      */
     @GetMapping
     @Operation(summary = "내 정보 조회", description = "내 정보를 조회합니다.")
-    public ResponseEntity getMyInfo(HttpServletResponse response) throws Exception {
+    public ResponseEntity<MemberInfoDTO> getMyInfo(HttpServletResponse response) throws Exception {
 
         MemberInfoDTO myInfo = memberService.getMyInfo();
-        return new ResponseEntity(myInfo, HttpStatus.OK);
+        return ResponseEntity.ok(myInfo);
     }
 }

@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signup(MemberSignUpDTO memberSignUpDTO) throws Exception {
+    public void signup(MemberSignUpDTO memberSignUpDTO) {
 
         Member member = memberSignUpDTO.toEntity();
         member.addUserAuthority();
@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void update(MemberUpdateDTO memberUpdateDTO) throws Exception {
+    public void update(MemberUpdateDTO memberUpdateDTO) {
 
         Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updatePassword(String checkPassword, String newPassword) throws Exception {
+    public void updatePassword(String checkPassword, String newPassword) {
 
         Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void withdraw(String checkPassword) throws Exception {
+    public void withdraw(String checkPassword) {
 
         Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
@@ -71,7 +71,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         memberRepository.delete(member);
-
     }
 
     @Override
@@ -83,7 +82,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberInfoDTO getMyInfo() throws Exception {
+    public MemberInfoDTO getMyInfo() {
         Member findMember = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(
                 () -> new MemberException(ErrorCode.NOT_FOUND_MEMBER));
 
