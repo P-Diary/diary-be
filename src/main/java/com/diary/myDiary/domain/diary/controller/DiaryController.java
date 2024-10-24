@@ -1,7 +1,6 @@
 package com.diary.myDiary.domain.diary.controller;
 
-import com.diary.myDiary.domain.diary.dto.WriteDTO;
-import com.diary.myDiary.domain.diary.entity.Diary;
+import com.diary.myDiary.domain.diary.dto.DiaryDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class DiaryController {
     @PostMapping
     @Operation(summary = "일기 작성", description = "일기를 작성합니다.")
     @ResponseStatus(HttpStatus.OK)
-    public void writeDiary(@Valid @RequestBody WriteDTO writeDTO) throws Exception {
+    public void writeDiary(@Valid @RequestBody DiaryDTO diaryDTO) throws Exception {
 
     }
 
